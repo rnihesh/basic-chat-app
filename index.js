@@ -8,14 +8,29 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = process.env.PORT || 9000
+const messages = [];
+
+const PORT = process.env.PORT || 9000;
 
 //socket.io
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
+
+  messages.forEach((msg) => {
+    socket.emit("message", msg);
+  });
+
   socket.on("user-message", (message) => {
     console.log("A new user message : ", message);
+
+    messages.push(message);
     io.emit("message", message);
+    console.log(messages);
+  });
+
+  socket.on("reset", () => {
+    messages.length = 0;
+    io.emit("reset");
   });
 });
 

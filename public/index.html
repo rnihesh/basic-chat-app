@@ -37,6 +37,12 @@
         renderMsgs();
       });
 
+      socket.on("reset", () => {
+        messageStore = [];
+        renderMsgs();
+        window.location.reload();
+      });
+
       sendBtn.addEventListener("click", (e) => {
         const message = msgInput.value;
         if (message.trim()) {
@@ -47,8 +53,9 @@
       });
 
       function resetMsgs() {
+        socket.emit("reset");
         messageStore = [];
-        renderMsgs()
+        renderMsgs();
       }
     </script>
   </body>
