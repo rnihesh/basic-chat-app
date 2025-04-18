@@ -8,6 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const PORT = process.env.PORT
+
 //socket.io
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
@@ -23,4 +25,4 @@ app.get("/", (req, res) => {
   return res.sendFile("/public/index.html");
 });
 
-server.listen(9000, () => console.log(`Server Started at PORT : 9000`));
+server.listen(PORT, () => console.log(`Server Started at PORT : ${PORT}`));
