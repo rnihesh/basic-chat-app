@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 9000
 
 //socket.io
 io.on("connection", (socket) => {
