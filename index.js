@@ -3,6 +3,7 @@ const http = require("http");
 const express = require("express");
 const path = require("path");
 const { Server } = require("socket.io");
+const { timeStamp } = require("console");
 
 const app = express();
 const server = http.createServer(app);
@@ -19,13 +20,15 @@ io.on("connection", (socket) => {
   messages.forEach((msg) => {
     socket.emit("message", msg);
   });
+  
 
-  socket.on("user-message", (message) => {
-    console.log("A new user message : ", message);
+  socket.on("user-message", (messageData) => {
+    console.log("A new user message : ", messageData);
+   
 
-    messages.push(message);
-    io.emit("message", message);
-    console.log(messages);
+    messages.push(messageData);
+    io.emit("message", messageData);
+    console.log(messageData);
   });
 
   socket.on("reset", () => {
